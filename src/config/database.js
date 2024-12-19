@@ -16,5 +16,10 @@ const sequelize = new Sequelize({
   },
 });
 
+sequelize.authenticate().catch((err) => {
+  console.error("数据库连接失败:", err.message);
+  process.exit(1);
+});
+
 console.log("数据库配置完成");
 module.exports = sequelize;

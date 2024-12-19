@@ -1,79 +1,72 @@
 const sequelize = require("../config/database");
-const { DataTypes } = require("sequelize");
+const Site = require("./site.model");
+const Category = require("./category.model");
+const Website = require("./website.model");
+const User = require("./user.model");
+const fs = require("fs").promises;
+const path = require("path");
 
-// 定义分类模型
-const Category = sequelize.define("Category", {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  name: {
-    type: DataTypes.STRING(50),
-    allowNull: false,
-  },
-});
-
-// 定义网站模型
-const Website = sequelize.define("Website", {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  title: {
-    type: DataTypes.STRING(100),
-    allowNull: false,
-  },
-  url: {
-    type: DataTypes.STRING(255),
-    allowNull: false,
-  },
-  description: {
-    type: DataTypes.TEXT,
-    allowNull: true,
-  },
-});
-
-// 定义关联关系
+// 定义模型关联关系
 Category.hasMany(Website);
 Website.belongsTo(Category);
 
-// 初始化数据库
-async function initDatabase() {
+// 初始化样本数据
+const initSampleData = async () => {
   try {
-    console.log("开始同步数据库模型...");
-    console.log("已定义的模型:", Object.keys(sequelize.models));
+    // 读取样本数据
+    const sampleData = JSON.parse(
+      await fs.readFile(
+        path.join(__dirname, "../data/sample-data.json"),
+        "utf8"
+      )
+    );
 
-    // 同步所有模型到数据库
-    await sequelize.sync();
-    console.log("数据库模型同步完成");
+    // 创建分类
+    await Category.bulkCreate(sampleData.categories);
+    console.log("分类数据初始化完成");
 
-    // 检查是否需要创建初始数据
-    const categoryCount = await Category.count();
-    if (categoryCount === 0) {
-      console.log("创建初始分类数据...");
-      await Category.bulkCreate([
-        { name: "常用工具" },
-        { name: "学习资源" },
-        { name: "开发文档" },
-        { name: "娱乐休闲" },
-      ]);
-      console.log("初始分类数据创建完成");
+    // 创建站点
+    await Site.bulkCreate(sampleData.sites);
+    console.log("站点数据初始化完成");
+
+    console.log("样本数据初始化完成");
+  } catch (error) {
+    console.error("样本数据初始化失败:", error);
+  }
+};
+
+const initDatabase = async () => {
+  try {
+    // 检查数据库连接
+    await sequelize.authenticate();
+    console.log("数据库连接成功");
+
+    // 检查是否需要初始化表结构
+    const shouldInit = process.env.DB_INIT === "true";
+
+    if (shouldInit) {
+      console.log("开始初始化数据库表...");
+      await sequelize.sync({ force: true }); // 强制重建表
+      console.log("数据库表初始化完成");
+
+      // 创建样本数据
+      await initSampleData();
     } else {
-      console.log(`数据库中已有 ${categoryCount} 个分类`);
+      // 仅验证表结构
+      await sequelize.sync({ alter: false });
+      console.log("数据库表结构验证完成");
     }
-
-    console.log("数据库初始化成功");
   } catch (error) {
     console.error("数据库初始化失败:", error);
     throw error;
   }
-}
+};
 
 module.exports = {
   sequelize,
+  Site,
   Category,
   Website,
+  User,
   initDatabase,
 };

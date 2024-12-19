@@ -1,7 +1,9 @@
 require("dotenv").config();
 const express = require("express");
-const { initDatabase } = require("./src/models");
+const sequelize = require("./src/config/database");
 const cors = require("cors");
+const errorHandler = require("./src/middleware/error.middleware");
+const { error } = require("./src/utils/response");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -13,33 +15,47 @@ app.use(express.urlencoded({ extended: true }));
 const siteController = require("./src/controllers/site.controller");
 const categoryController = require("./src/controllers/category.controller");
 const websiteController = require("./src/controllers/website.controller");
+const authController = require("./src/controllers/auth.controller");
 
-app.get("/api/sites", siteController.getAllSites);
-app.post("/api/sites", siteController.createSite);
-app.get("/api/sites/category/:category", siteController.getSitesByCategory);
+// 导入路由
+const siteRoutes = require("./src/routes/site.routes");
+const categoryRoutes = require("./src/routes/category.routes");
+const authRoutes = require("./src/routes/auth.routes");
 
-app.get("/api/categories", categoryController.getAllCategories);
-app.post("/api/categories", categoryController.createCategory);
-
-app.get("/api/websites", websiteController.getWebsites);
-app.post("/api/websites", websiteController.createWebsite);
+app.use("/api/sites", siteRoutes);
+app.use("/api/categories", categoryRoutes);
+app.use("/api/auth", authRoutes);
 
 app.get("/test", (req, res) => {
   res.json({ message: "API 服务器正常运行" });
 });
 
+// 404 处理
+app.use((req, res) => {
+  error(res, 404, "接口不存在");
+});
+
+// 全局错误处理
+app.use(errorHandler);
+
+// 未捕获的异常处理
+process.on("uncaughtException", (err) => {
+  console.error("未捕获的异常:", err);
+  process.exit(1);
+});
+
+process.on("unhandledRejection", (err) => {
+  console.error("未处理的 Promise 拒绝:", err);
+  process.exit(1);
+});
+
 async function startServer() {
   try {
     console.log("正在启动服务器...");
-    console.log("环境变量检查:", {
-      DB_HOST: process.env.DB_HOST,
-      DB_NAME: process.env.DB_NAME,
-      PORT: port,
-    });
 
-    // 初始化数据库
-    console.log("开始初始化数据库...");
-    await initDatabase();
+    // 只检查数据库连接
+    await sequelize.authenticate();
+    console.log("数据库连接成功");
 
     app.listen(port, () => {
       console.log("=================================");
@@ -51,14 +67,5 @@ async function startServer() {
     process.exit(1);
   }
 }
-
-// 未捕获的异常处理
-process.on("uncaughtException", (error) => {
-  console.error("未捕获的异常:", error);
-});
-
-process.on("unhandledRejection", (error) => {
-  console.error("未处理的 Promise 拒绝:", error);
-});
 
 startServer();
