@@ -317,13 +317,20 @@ exports.exportBookmarks = async (req, res) => {
     });
 
     // 生成Chrome书签HTML
-    let html = `
-<!DOCTYPE NETSCAPE-Bookmark-file-1>
+    let html = `<!DOCTYPE NETSCAPE-Bookmark-file-1>
+<!-- This is an automatically generated file.
+     It will be read and overwritten.
+     DO NOT EDIT! -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
 <TITLE>Bookmarks</TITLE>
 <H1>Bookmarks</H1>
 <DL><p>
-    `;
+    <DT><H3 ADD_DATE="${Math.floor(
+      Date.now() / 1000
+    )}" LAST_MODIFIED="${Math.floor(
+      Date.now() / 1000
+    )}" PERSONAL_TOOLBAR_FOLDER="true">书签栏</H3>
+    <DL><p>`;
 
     // 按分类组织书签
     for (const category of categories) {
@@ -331,28 +338,72 @@ exports.exportBookmarks = async (req, res) => {
         (site) => site.category === category.name
       );
       if (categorySites.length > 0) {
+        // 添加分类
         html += `
-    <DT><H3>${category.name}</H3>
-    <DL><p>`;
+        <DT><H3 ADD_DATE="${Math.floor(
+          category.createdAt.getTime() / 1000
+        )}" LAST_MODIFIED="${Math.floor(
+          category.updatedAt.getTime() / 1000
+        )}">${category.name}</H3>
+        <DL><p>`;
 
+        // 添加该分类下的所有书签
         for (const site of categorySites) {
+          const addDate = Math.floor(site.createdAt.getTime() / 1000);
+          const icon = site.icon || "";
           html += `
-        <DT><A HREF="${site.url}" ICON="${site.icon}">${site.title}</A>`;
+            <DT><A HREF="${escapeHtml(
+              site.url
+            )}" ADD_DATE="${addDate}" ICON="${escapeHtml(icon)}">${escapeHtml(
+            site.title
+          )}</A>`;
+
+          // 如果有描述，添加为注释
+          if (site.description) {
+            html += `\n            <!-- ${escapeHtml(site.description)} -->`;
+          }
         }
 
         html += `
-    </DL><p>`;
+        </DL><p>`;
       }
     }
 
     html += `
+    </DL><p>
 </DL><p>`;
 
+    const now = new Date();
+    const timestamp = now
+      .toLocaleString("zh-CN", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+      })
+      .replace(/[/:\s]/g, "-");
+    const filename = `bookmarks_${timestamp}.html`;
+
     // 设置响应头，让浏览器下载文件
-    res.setHeader("Content-Type", "text/html");
-    res.setHeader("Content-Disposition", "attachment; filename=bookmarks.html");
+    res.setHeader("Content-Type", "text/html; charset=UTF-8");
+    res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
     res.send(html);
   } catch (err) {
-    error(res, 500, err.message);
+    console.error("导出书签失败:", err);
+    error(res, 500, `导出失败: ${err.message}`);
   }
 };
+
+// HTML转义函数
+function escapeHtml(unsafe) {
+  if (!unsafe) return "";
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
