@@ -1,121 +1,79 @@
 {
   "categories": [
-    { "name": "未分类", "description": "默认分类", "order": 0 },
-    { "name": "常用工具", "description": "日常使用的工具网站", "order": 1 },
-    { "name": "学习资源", "description": "编程学习资源", "order": 2 },
-    { "name": "开发文档", "description": "技术文档", "order": 3 },
-    { "name": "娱乐休闲", "description": "放松娱乐网站", "order": 4 },
-    { "name": "设计资源", "description": "设计相关资源", "order": 5 },
-    { "name": "效率工具", "description": "提升工作效率", "order": 6 },
-    { "name": "资讯新闻", "description": "新闻和科技资讯", "order": 7 },
-    { "name": "社区论坛", "description": "技术交流社区", "order": 8 },
-    { "name": "人工智能", "description": "AI相关工具", "order": 9 },
-    { "name": "在线工具", "description": "各类在线工具", "order": 10 }
+    { "name": "开发工具", "description": "常用的开发工具网站", "order": 1 },
+    { "name": "技术文档", "description": "各类技术文档和API", "order": 2 },
+    { "name": "代码托管", "description": "代码仓库和版本控制", "order": 3 },
+    { "name": "云服务", "description": "云计算和服务平台", "order": 4 },
+    { "name": "学习平台", "description": "编程学习资源", "order": 5 },
+    { "name": "技术社区", "description": "开发者交流平台", "order": 6 },
+    { "name": "AI工具", "description": "人工智能相关工具", "order": 7 },
+    { "name": "测试工具", "description": "软件测试相关", "order": 8 },
+    { "name": "部署工具", "description": "应用部署和运维", "order": 9 },
+    { "name": "在线编程", "description": "在线编码和调试", "order": 10 }
   ],
   "sites": [
     {
-      "title": "GitHub",
-      "url": "https://github.com",
-      "description": "全球最大的代码托管平台",
-      "category": "常用工具",
-      "tags": ["代码", "开源", "Git"],
-      "icon": "https://github.com/favicon.ico"
-    },
-    {
-      "title": "VSCode",
+      "title": "VS Code",
       "url": "https://code.visualstudio.com",
-      "description": "强大的代码编辑器",
-      "category": "常用工具",
-      "tags": ["编辑器", "开发工具"],
+      "description": "微软开源代码编辑器",
+      "category": "开发工具",
+      "tags": ["编辑器", "IDE"],
       "icon": "https://code.visualstudio.com/favicon.ico"
     },
     {
-      "title": "Postman",
-      "url": "https://www.postman.com",
-      "description": "API开发测试工具",
-      "category": "常用工具",
-      "tags": ["API", "测试"],
-      "icon": "https://www.postman.com/favicon.ico"
+      "title": "WebStorm",
+      "url": "https://www.jetbrains.com/webstorm",
+      "description": "专业的JavaScript IDE",
+      "category": "开发工具",
+      "tags": ["IDE", "JavaScript"],
+      "icon": "https://www.jetbrains.com/favicon.ico"
     },
     {
-      "title": "Docker Hub",
-      "url": "https://hub.docker.com",
-      "description": "Docker镜像仓库",
-      "category": "常用工具",
-      "tags": ["Docker", "容器"],
-      "icon": "https://hub.docker.com/favicon.ico"
+      "title": "Sublime Text",
+      "url": "https://www.sublimetext.com",
+      "description": "轻量级文本编辑器",
+      "category": "开发工具",
+      "tags": ["编辑器", "开发"],
+      "icon": "https://www.sublimetext.com/favicon.ico"
     },
     {
-      "title": "NPM",
-      "url": "https://www.npmjs.com",
-      "description": "Node.js包管理器",
-      "category": "常用工具",
-      "tags": ["Node.js", "包管理"],
-      "icon": "https://www.npmjs.com/favicon.ico"
+      "title": "IntelliJ IDEA",
+      "url": "https://www.jetbrains.com/idea",
+      "description": "Java开发IDE",
+      "category": "开发工具",
+      "tags": ["IDE", "Java"],
+      "icon": "https://www.jetbrains.com/favicon.ico"
     },
     {
-      "title": "Git",
-      "url": "https://git-scm.com",
-      "description": "版本控制工具",
-      "category": "常用工具",
-      "tags": ["版本控制", "Git"],
-      "icon": "https://git-scm.com/favicon.ico"
+      "title": "PyCharm",
+      "url": "https://www.jetbrains.com/pycharm",
+      "description": "Python开发IDE",
+      "category": "开发工具",
+      "tags": ["IDE", "Python"],
+      "icon": "https://www.jetbrains.com/favicon.ico"
     },
 
     {
-      "title": "MDN",
+      "title": "MDN Web Docs",
       "url": "https://developer.mozilla.org",
-      "description": "Web开发学习资源",
-      "category": "学习资源",
+      "description": "Web技术权威文档",
+      "category": "技术文档",
       "tags": ["Web", "文档"],
       "icon": "https://developer.mozilla.org/favicon.ico"
     },
     {
-      "title": "freeCodeCamp",
-      "url": "https://www.freecodecamp.org",
-      "description": "免费学习编程的平台",
-      "category": "学习资源",
-      "tags": ["编程", "教程"],
-      "icon": "https://www.freecodecamp.org/favicon.ico"
+      "title": "DevDocs",
+      "url": "https://devdocs.io",
+      "description": "各种API文档集合",
+      "category": "技术文档",
+      "tags": ["API", "文档"],
+      "icon": "https://devdocs.io/favicon.ico"
     },
-    {
-      "title": "Coursera",
-      "url": "https://www.coursera.org",
-      "description": "全球知名在线课程平台",
-      "category": "学习资源",
-      "tags": ["课程", "教育"],
-      "icon": "https://www.coursera.org/favicon.ico"
-    },
-    {
-      "title": "LeetCode",
-      "url": "https://leetcode.com",
-      "description": "程序员刷题平台",
-      "category": "学习资源",
-      "tags": ["算法", "面试"],
-      "icon": "https://leetcode.com/favicon.ico"
-    },
-    {
-      "title": "掘金",
-      "url": "https://juejin.cn",
-      "description": "技术社区",
-      "category": "学习资源",
-      "tags": ["技术", "博客"],
-      "icon": "https://juejin.cn/favicon.ico"
-    },
-    {
-      "title": "Stack Overflow",
-      "url": "https://stackoverflow.com",
-      "description": "程序员问答社区",
-      "category": "学习资源",
-      "tags": ["问答", "编程"],
-      "icon": "https://stackoverflow.com/favicon.ico"
-    },
-
     {
       "title": "Vue.js",
       "url": "https://vuejs.org",
       "description": "Vue.js官方文档",
-      "category": "开发文档",
+      "category": "技术文档",
       "tags": ["Vue", "前端"],
       "icon": "https://vuejs.org/favicon.ico"
     },
@@ -123,383 +81,345 @@
       "title": "React",
       "url": "https://reactjs.org",
       "description": "React官方文档",
-      "category": "开发文档",
+      "category": "技术文档",
       "tags": ["React", "前端"],
       "icon": "https://reactjs.org/favicon.ico"
     },
     {
       "title": "Node.js",
-      "url": "https://nodejs.org",
+      "url": "https://nodejs.org/docs",
       "description": "Node.js官方文档",
-      "category": "开发文档",
+      "category": "技术文档",
       "tags": ["Node.js", "后端"],
       "icon": "https://nodejs.org/favicon.ico"
     },
+
     {
-      "title": "Python",
-      "url": "https://www.python.org",
-      "description": "Python官方文档",
-      "category": "开发文档",
-      "tags": ["Python", "编程语言"],
-      "icon": "https://www.python.org/favicon.ico"
+      "title": "GitHub",
+      "url": "https://github.com",
+      "description": "最大的代码托管平台",
+      "category": "代码托管",
+      "tags": ["Git", "开源"],
+      "icon": "https://github.com/favicon.ico"
     },
     {
-      "title": "MySQL",
-      "url": "https://dev.mysql.com/doc",
-      "description": "MySQL官方文档",
-      "category": "开发文档",
-      "tags": ["MySQL", "数据库"],
-      "icon": "https://www.mysql.com/favicon.ico"
+      "title": "GitLab",
+      "url": "https://gitlab.com",
+      "description": "DevOps平台",
+      "category": "代码托管",
+      "tags": ["Git", "CI/CD"],
+      "icon": "https://gitlab.com/favicon.ico"
     },
     {
-      "title": "Docker",
-      "url": "https://docs.docker.com",
-      "description": "Docker官方文档",
-      "category": "开发文档",
-      "tags": ["Docker", "容器"],
-      "icon": "https://www.docker.com/favicon.ico"
+      "title": "Bitbucket",
+      "url": "https://bitbucket.org",
+      "description": "企业级代码托管",
+      "category": "代码托管",
+      "tags": ["Git", "团队"],
+      "icon": "https://bitbucket.org/favicon.ico"
+    },
+    {
+      "title": "Gitee",
+      "url": "https://gitee.com",
+      "description": "国内代码托管平台",
+      "category": "代码托管",
+      "tags": ["Git", "开源"],
+      "icon": "https://gitee.com/favicon.ico"
+    },
+    {
+      "title": "Coding",
+      "url": "https://coding.net",
+      "description": "一站式研发管理平台",
+      "category": "代码托管",
+      "tags": ["Git", "DevOps"],
+      "icon": "https://coding.net/favicon.ico"
     },
 
     {
-      "title": "Bilibili",
-      "url": "https://www.bilibili.com",
-      "description": "年轻人喜欢的视频网站",
-      "category": "娱乐休闲",
-      "tags": ["视频", "动漫"],
-      "icon": "https://www.bilibili.com/favicon.ico"
+      "title": "AWS",
+      "url": "https://aws.amazon.com",
+      "description": "亚马逊云服务",
+      "category": "云服务",
+      "tags": ["云计算", "服务"],
+      "icon": "https://aws.amazon.com/favicon.ico"
     },
     {
-      "title": "YouTube",
-      "url": "https://www.youtube.com",
-      "description": "全球最大的视频平台",
-      "category": "娱乐休闲",
-      "tags": ["视频", "直播"],
-      "icon": "https://www.youtube.com/favicon.ico"
+      "title": "阿里云",
+      "url": "https://aliyun.com",
+      "description": "阿里巴巴云服务",
+      "category": "云服务",
+      "tags": ["云计算", "服务"],
+      "icon": "https://aliyun.com/favicon.ico"
     },
     {
-      "title": "Netflix",
-      "url": "https://www.netflix.com",
-      "description": "流媒体视频网站",
-      "category": "娱乐休闲",
-      "tags": ["电影", "剧集"],
-      "icon": "https://www.netflix.com/favicon.ico"
+      "title": "腾讯云",
+      "url": "https://cloud.tencent.com",
+      "description": "腾讯云服务",
+      "category": "云服务",
+      "tags": ["云计算", "服务"],
+      "icon": "https://cloud.tencent.com/favicon.ico"
     },
     {
-      "title": "Spotify",
-      "url": "https://www.spotify.com",
-      "description": "音乐流媒体平台",
-      "category": "娱乐休闲",
-      "tags": ["音乐", "播客"],
-      "icon": "https://www.spotify.com/favicon.ico"
+      "title": "Azure",
+      "url": "https://azure.microsoft.com",
+      "description": "微软云服务",
+      "category": "云服务",
+      "tags": ["云计算", "服务"],
+      "icon": "https://azure.microsoft.com/favicon.ico"
     },
     {
-      "title": "Steam",
-      "url": "https://store.steampowered.com",
-      "description": "游戏平台",
-      "category": "娱乐休闲",
-      "tags": ["游戏", "社区"],
-      "icon": "https://store.steampowered.com/favicon.ico"
-    },
-    {
-      "title": "Reddit",
-      "url": "https://www.reddit.com",
-      "description": "社交新闻网站",
-      "category": "娱乐休闲",
-      "tags": ["社区", "讨论"],
-      "icon": "https://www.reddit.com/favicon.ico"
+      "title": "Vercel",
+      "url": "https://vercel.com",
+      "description": "前端部署平台",
+      "category": "云服务",
+      "tags": ["部署", "托管"],
+      "icon": "https://vercel.com/favicon.ico"
     },
 
     {
-      "title": "Dribbble",
-      "url": "https://dribbble.com",
-      "description": "设计师作品分享平台",
-      "category": "设计资源",
-      "tags": ["设计", "灵感"],
-      "icon": "https://dribbble.com/favicon.ico"
+      "title": "掘金",
+      "url": "https://juejin.cn",
+      "description": "开发者社区",
+      "category": "学习平台",
+      "tags": ["学习", "社区"],
+      "icon": "https://juejin.cn/favicon.ico"
     },
     {
-      "title": "Behance",
-      "url": "https://www.behance.net",
-      "description": "创意设计社区",
-      "category": "设计资源",
-      "tags": ["设计", "作品集"],
-      "icon": "https://www.behance.net/favicon.ico"
+      "title": "LeetCode",
+      "url": "https://leetcode.com",
+      "description": "刷题平台",
+      "category": "学习平台",
+      "tags": ["算法", "面试"],
+      "icon": "https://leetcode.com/favicon.ico"
     },
     {
-      "title": "Figma",
-      "url": "https://www.figma.com",
-      "description": "在线设计工具",
-      "category": "设计资源",
-      "tags": ["设计", "协作"],
-      "icon": "https://www.figma.com/favicon.ico"
+      "title": "Coursera",
+      "url": "https://www.coursera.org",
+      "description": "在线课程平台",
+      "category": "学习平台",
+      "tags": ["课程", "学习"],
+      "icon": "https://www.coursera.org/favicon.ico"
     },
     {
-      "title": "Unsplash",
-      "url": "https://unsplash.com",
-      "description": "免费高质量图片",
-      "category": "设计资源",
-      "tags": ["图片", "素材"],
-      "icon": "https://unsplash.com/favicon.ico"
+      "title": "Udemy",
+      "url": "https://www.udemy.com",
+      "description": "在线教育平台",
+      "category": "学习平台",
+      "tags": ["课程", "学习"],
+      "icon": "https://www.udemy.com/favicon.ico"
     },
     {
-      "title": "IconFont",
-      "url": "https://www.iconfont.cn",
-      "description": "阿里巴巴矢量图标库",
-      "category": "设计资源",
-      "tags": ["图标", "素材"],
-      "icon": "https://www.iconfont.cn/favicon.ico"
-    },
-    {
-      "title": "Adobe Color",
-      "url": "https://color.adobe.com",
-      "description": "配色工具",
-      "category": "设计资源",
-      "tags": ["配色", "工具"],
-      "icon": "https://color.adobe.com/favicon.ico"
-    },
-    {
-      "title": "Notion",
-      "url": "https://www.notion.so",
-      "description": "全能笔记工具",
-      "category": "效率工具",
-      "tags": ["笔记", "协作"],
-      "icon": "https://www.notion.so/favicon.ico"
-    },
-    {
-      "title": "Trello",
-      "url": "https://trello.com",
-      "description": "项目管理工具",
-      "category": "效率工具",
-      "tags": ["任务", "协作"],
-      "icon": "https://trello.com/favicon.ico"
-    },
-    {
-      "title": "Slack",
-      "url": "https://slack.com",
-      "description": "团队协作平台",
-      "category": "效率工具",
-      "tags": ["沟通", "协作"],
-      "icon": "https://slack.com/favicon.ico"
-    },
-    {
-      "title": "Google Calendar",
-      "url": "https://calendar.google.com",
-      "description": "日程管理工具",
-      "category": "效率工具",
-      "tags": ["日程", "规划"],
-      "icon": "https://calendar.google.com/favicon.ico"
-    },
-    {
-      "title": "Evernote",
-      "url": "https://www.evernote.com",
-      "description": "笔记应用",
-      "category": "效率工具",
-      "tags": ["笔记", "知识管理"],
-      "icon": "https://www.evernote.com/favicon.ico"
-    },
-    {
-      "title": "Todoist",
-      "url": "https://todoist.com",
-      "description": "待办事项管理",
-      "category": "效率工具",
-      "tags": ["任务", "规划"],
-      "icon": "https://todoist.com/favicon.ico"
+      "title": "极客时间",
+      "url": "https://time.geekbang.org",
+      "description": "IT技术课程",
+      "category": "学习平台",
+      "tags": ["课程", "学习"],
+      "icon": "https://time.geekbang.org/favicon.ico"
     },
 
     {
-      "title": "TechCrunch",
-      "url": "https://techcrunch.com",
-      "description": "科技新闻网站",
-      "category": "资讯新闻",
-      "tags": ["科技", "新闻"],
-      "icon": "https://techcrunch.com/favicon.ico"
+      "title": "Stack Overflow",
+      "url": "https://stackoverflow.com",
+      "description": "程序员问答社区",
+      "category": "技术社区",
+      "tags": ["问答", "社区"],
+      "icon": "https://stackoverflow.com/favicon.ico"
     },
-    {
-      "title": "Hacker News",
-      "url": "https://news.ycombinator.com",
-      "description": "黑客新闻",
-      "category": "资讯新闻",
-      "tags": ["科技", "讨论"],
-      "icon": "https://news.ycombinator.com/favicon.ico"
-    },
-    {
-      "title": "InfoQ",
-      "url": "https://www.infoq.cn",
-      "description": "软件开发新闻",
-      "category": "资讯新闻",
-      "tags": ["技术", "资讯"],
-      "icon": "https://www.infoq.cn/favicon.ico"
-    },
-    {
-      "title": "36氪",
-      "url": "https://36kr.com",
-      "description": "创业资讯",
-      "category": "资讯新闻",
-      "tags": ["创业", "科技"],
-      "icon": "https://36kr.com/favicon.ico"
-    },
-    {
-      "title": "少数派",
-      "url": "https://sspai.com",
-      "description": "数字生活指南",
-      "category": "资讯新闻",
-      "tags": ["科技", "生活"],
-      "icon": "https://sspai.com/favicon.ico"
-    },
-    {
-      "title": "Product Hunt",
-      "url": "https://www.producthunt.com",
-      "description": "新产品发现平台",
-      "category": "资讯新闻",
-      "tags": ["产品", "创新"],
-      "icon": "https://www.producthunt.com/favicon.ico"
-    },
-
     {
       "title": "V2EX",
       "url": "https://www.v2ex.com",
-      "description": "程序员社区",
-      "category": "社区论坛",
-      "tags": ["社区", "技术"],
+      "description": "创意工作者社区",
+      "category": "技术社区",
+      "tags": ["社区", "讨论"],
       "icon": "https://www.v2ex.com/favicon.ico"
-    },
-    {
-      "title": "知乎",
-      "url": "https://www.zhihu.com",
-      "description": "问答社区",
-      "category": "社区论坛",
-      "tags": ["问答", "知识"],
-      "icon": "https://www.zhihu.com/favicon.ico"
     },
     {
       "title": "SegmentFault",
       "url": "https://segmentfault.com",
       "description": "开发者社区",
-      "category": "社区论坛",
-      "tags": ["技术", "问答"],
+      "category": "技术社区",
+      "tags": ["问答", "社区"],
       "icon": "https://segmentfault.com/favicon.ico"
     },
     {
-      "title": "CSDN",
-      "url": "https://www.csdn.net",
-      "description": "程序员社区",
-      "category": "社区论坛",
-      "tags": ["技术", "博客"],
-      "icon": "https://www.csdn.net/favicon.ico"
+      "title": "InfoQ",
+      "url": "https://www.infoq.cn",
+      "description": "技术资讯社区",
+      "category": "技术社区",
+      "tags": ["资讯", "社区"],
+      "icon": "https://www.infoq.cn/favicon.ico"
     },
     {
       "title": "开源中国",
       "url": "https://www.oschina.net",
       "description": "开源技术社区",
-      "category": "社区论坛",
-      "tags": ["开源", "技术"],
+      "category": "技术社区",
+      "tags": ["开源", "社区"],
       "icon": "https://www.oschina.net/favicon.ico"
-    },
-    {
-      "title": "Reddit Programming",
-      "url": "https://www.reddit.com/r/programming",
-      "description": "编程讨论社区",
-      "category": "社区论坛",
-      "tags": ["编程", "讨论"],
-      "icon": "https://www.reddit.com/favicon.ico"
     },
 
     {
       "title": "ChatGPT",
       "url": "https://chat.openai.com",
-      "description": "AI聊天助手",
-      "category": "人工智能",
-      "tags": ["AI", "聊天"],
+      "description": "AI对话助手",
+      "category": "AI工具",
+      "tags": ["AI", "对话"],
       "icon": "https://chat.openai.com/favicon.ico"
-    },
-    {
-      "title": "Hugging Face",
-      "url": "https://huggingface.co",
-      "description": "AI模型社区",
-      "category": "人工智能",
-      "tags": ["AI", "模型"],
-      "icon": "https://huggingface.co/favicon.ico"
-    },
-    {
-      "title": "Midjourney",
-      "url": "https://www.midjourney.com",
-      "description": "AI绘画工具",
-      "category": "人工智能",
-      "tags": ["AI", "绘画"],
-      "icon": "https://www.midjourney.com/favicon.ico"
-    },
-    {
-      "title": "Stable Diffusion",
-      "url": "https://stability.ai",
-      "description": "AI图像生成",
-      "category": "人工智能",
-      "tags": ["AI", "图像"],
-      "icon": "https://stability.ai/favicon.ico"
     },
     {
       "title": "Claude",
       "url": "https://claude.ai",
       "description": "AI助手",
-      "category": "人工智能",
+      "category": "AI工具",
       "tags": ["AI", "对话"],
       "icon": "https://claude.ai/favicon.ico"
     },
     {
-      "title": "TensorFlow",
-      "url": "https://www.tensorflow.org",
-      "description": "机器学习框架",
-      "category": "人工智能",
-      "tags": ["AI", "深度学习"],
-      "icon": "https://www.tensorflow.org/favicon.ico"
+      "title": "Copilot",
+      "url": "https://github.com/features/copilot",
+      "description": "AI编程助手",
+      "category": "AI工具",
+      "tags": ["AI", "编程"],
+      "icon": "https://github.com/favicon.ico"
+    },
+    {
+      "title": "Hugging Face",
+      "url": "https://huggingface.co",
+      "description": "AI模型平台",
+      "category": "AI工具",
+      "tags": ["AI", "模型"],
+      "icon": "https://huggingface.co/favicon.ico"
+    },
+    {
+      "title": "Bard",
+      "url": "https://bard.google.com",
+      "description": "谷歌AI助手",
+      "category": "AI工具",
+      "tags": ["AI", "对话"],
+      "icon": "https://bard.google.com/favicon.ico"
     },
 
     {
-      "title": "JSON Editor Online",
-      "url": "https://jsoneditoronline.org",
-      "description": "在线JSON编辑器",
-      "category": "在线工具",
-      "tags": ["JSON", "编辑器"],
-      "icon": "https://jsoneditoronline.org/favicon.ico"
+      "title": "Postman",
+      "url": "https://www.postman.com",
+      "description": "API测试工具",
+      "category": "测试工具",
+      "tags": ["API", "测试"],
+      "icon": "https://www.postman.com/favicon.ico"
     },
     {
-      "title": "Can I Use",
-      "url": "https://caniuse.com",
-      "description": "浏览器兼容性查询",
-      "category": "在线工具",
-      "tags": ["Web", "兼容性"],
-      "icon": "https://caniuse.com/favicon.ico"
+      "title": "JMeter",
+      "url": "https://jmeter.apache.org",
+      "description": "性能测试工具",
+      "category": "测试工具",
+      "tags": ["性能", "测试"],
+      "icon": "https://jmeter.apache.org/favicon.ico"
     },
     {
-      "title": "Carbon",
-      "url": "https://carbon.now.sh",
-      "description": "代码图片生成器",
-      "category": "在线工具",
-      "tags": ["代码", "分享"],
-      "icon": "https://carbon.now.sh/favicon.ico"
+      "title": "Selenium",
+      "url": "https://www.selenium.dev",
+      "description": "自动化测试工具",
+      "category": "测试工具",
+      "tags": ["自动化", "测试"],
+      "icon": "https://www.selenium.dev/favicon.ico"
     },
     {
-      "title": "TinyPNG",
-      "url": "https://tinypng.com",
-      "description": "图片压缩工具",
-      "category": "在线工具",
-      "tags": ["图片", "压缩"],
-      "icon": "https://tinypng.com/favicon.ico"
+      "title": "Jest",
+      "url": "https://jestjs.io",
+      "description": "JavaScript测试框架",
+      "category": "测试工具",
+      "tags": ["单元测试", "JavaScript"],
+      "icon": "https://jestjs.io/favicon.ico"
     },
     {
-      "title": "RegExr",
-      "url": "https://regexr.com",
-      "description": "正则表达式测试",
-      "category": "在线工具",
-      "tags": ["正则", "测试"],
-      "icon": "https://regexr.com/favicon.ico"
+      "title": "Cypress",
+      "url": "https://www.cypress.io",
+      "description": "前端测试工具",
+      "category": "测试工具",
+      "tags": ["E2E", "测试"],
+      "icon": "https://www.cypress.io/favicon.ico"
+    },
+
+    {
+      "title": "Docker",
+      "url": "https://www.docker.com",
+      "description": "容器化平台",
+      "category": "部署工具",
+      "tags": ["容器", "部署"],
+      "icon": "https://www.docker.com/favicon.ico"
     },
     {
-      "title": "Draw.io",
-      "url": "https://www.draw.io",
-      "description": "在线绘图工具",
-      "category": "在线工具",
-      "tags": ["图表", "绘图"],
-      "icon": "https://www.draw.io/favicon.ico"
+      "title": "Kubernetes",
+      "url": "https://kubernetes.io",
+      "description": "容器编排平台",
+      "category": "部署工具",
+      "tags": ["容器", "编排"],
+      "icon": "https://kubernetes.io/favicon.ico"
+    },
+    {
+      "title": "Jenkins",
+      "url": "https://www.jenkins.io",
+      "description": "自动化部署工具",
+      "category": "部署工具",
+      "tags": ["CI/CD", "自动化"],
+      "icon": "https://www.jenkins.io/favicon.ico"
+    },
+    {
+      "title": "Nginx",
+      "url": "https://nginx.org",
+      "description": "高性能Web服务器",
+      "category": "部署工具",
+      "tags": ["服务器", "负载均衡"],
+      "icon": "https://nginx.org/favicon.ico"
+    },
+    {
+      "title": "PM2",
+      "url": "https://pm2.keymetrics.io",
+      "description": "Node.js进程管理器",
+      "category": "部署工具",
+      "tags": ["Node.js", "进程管理"],
+      "icon": "https://pm2.keymetrics.io/favicon.ico"
+    },
+
+    {
+      "title": "CodePen",
+      "url": "https://codepen.io",
+      "description": "在线代码编辑器",
+      "category": "在线编程",
+      "tags": ["前端", "代码"],
+      "icon": "https://codepen.io/favicon.ico"
+    },
+    {
+      "title": "CodeSandbox",
+      "url": "https://codesandbox.io",
+      "description": "在线开发环境",
+      "category": "在线编程",
+      "tags": ["开发", "协作"],
+      "icon": "https://codesandbox.io/favicon.ico"
+    },
+    {
+      "title": "Replit",
+      "url": "https://replit.com",
+      "description": "在线IDE平台",
+      "category": "在线编程",
+      "tags": ["IDE", "协作"],
+      "icon": "https://replit.com/favicon.ico"
+    },
+    {
+      "title": "StackBlitz",
+      "url": "https://stackblitz.com",
+      "description": "在线Web IDE",
+      "category": "在线编程",
+      "tags": ["Web", "开发"],
+      "icon": "https://stackblitz.com/favicon.ico"
+    },
+    {
+      "title": "JSFiddle",
+      "url": "https://jsfiddle.net",
+      "description": "在线代码测试工具",
+      "category": "在线编程",
+      "tags": ["前端", "测试"],
+      "icon": "https://jsfiddle.net/favicon.ico"
     }
   ]
 }

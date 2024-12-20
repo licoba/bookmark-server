@@ -4,6 +4,14 @@ const sequelize = require("../config/database");
 const Site = sequelize.define(
   "Site",
   {
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "Users",
+        key: "id",
+      },
+    },
     title: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -24,7 +32,8 @@ const Site = sequelize.define(
       defaultValue: [],
     },
     icon: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
+      allowNull: true,
     },
   },
   {

@@ -3,7 +3,38 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { Op } = require("sequelize");
 const { success, error, created, unauthorized } = require("../utils/response");
+const Category = require("../models/category.model");
 
+/**
+ * @swagger
+ * /auth/register:
+ *   post:
+ *     tags: [用户认证]
+ *     summary: 用户注册
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 description: 用户名
+ *               password:
+ *                 type: string
+ *                 description: 密码
+ *               email:
+ *                 type: string
+ *                 description: 邮箱
+ *             required:
+ *               - username
+ *               - password
+ *               - email
+ *     responses:
+ *       200:
+ *         description: 注册成功
+ */
 exports.register = async (req, res) => {
   try {
     const { username, password, email } = req.body;
@@ -28,6 +59,13 @@ exports.register = async (req, res) => {
       password: await bcrypt.hash(password, 8),
     });
 
+    await Category.create({
+      userId: user.id,
+      name: "未分类",
+      description: "默认分类",
+      order: 0,
+    });
+
     success(
       res,
       {
@@ -42,6 +80,32 @@ exports.register = async (req, res) => {
   }
 };
 
+/**
+ * @swagger
+ * /auth/login:
+ *   post:
+ *     tags: [用户认证]
+ *     summary: 用户登录
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               account:
+ *                 type: string
+ *                 description: 用户名或邮箱
+ *               password:
+ *                 type: string
+ *                 description: 密码
+ *             required:
+ *               - account
+ *               - password
+ *     responses:
+ *       200:
+ *         description: 登录成功
+ */
 exports.login = async (req, res) => {
   try {
     const { account, password } = req.body;
@@ -67,7 +131,40 @@ exports.login = async (req, res) => {
   }
 };
 
-// 修改密码
+/**
+ * @swagger
+ * /auth/password:
+ *   put:
+ *     tags: [用户认证]
+ *     summary: 修改密码
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               oldPassword:
+ *                 type: string
+ *                 description: 原密码
+ *               newPassword:
+ *                 type: string
+ *                 description: 新密码
+ *             required:
+ *               - oldPassword
+ *               - newPassword
+ *     responses:
+ *       200:
+ *         description: 修改成功
+ *         content:
+ *           application/json:
+ *             example:
+ *               code: 0
+ *               message: "密码修改成功"
+ *               data: null
+ */
 exports.changePassword = async (req, res) => {
   try {
     const { oldPassword, newPassword } = req.body;
@@ -93,7 +190,41 @@ exports.changePassword = async (req, res) => {
   }
 };
 
-// 更新用户信息
+/**
+ * @swagger
+ * /auth/profile:
+ *   put:
+ *     tags: [用户认证]
+ *     summary: 更新用户信息
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 description: 新用户名
+ *               email:
+ *                 type: string
+ *                 description: 新邮箱
+ *     responses:
+ *       200:
+ *         description: 更新成功
+ *         content:
+ *           application/json:
+ *             example:
+ *               code: 0
+ *               message: "用户信息更新成功"
+ *               data: {
+ *                 id: 1,
+ *                 username: "newname",
+ *                 email: "new@example.com"
+ *               }
+ */
 exports.updateProfile = async (req, res) => {
   try {
     const { username, email } = req.body;
@@ -137,6 +268,18 @@ exports.updateProfile = async (req, res) => {
   }
 };
 
+/**
+ * @swagger
+ * /auth/logout:
+ *   post:
+ *     tags: [用户认证]
+ *     summary: 退出登录
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: 退出成功
+ */
 exports.logout = async (req, res) => {
   try {
     success(res, null, "退出登录成功");

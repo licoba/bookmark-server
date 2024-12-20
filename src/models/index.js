@@ -7,8 +7,27 @@ const fs = require("fs").promises;
 const path = require("path");
 
 // 定义模型关联关系
-Category.hasMany(Website);
-Website.belongsTo(Category);
+Category.hasMany(Website, {
+  foreignKey: "categoryId",
+});
+Website.belongsTo(Category, {
+  foreignKey: "categoryId",
+});
+
+// 用户关联
+User.hasMany(Site, {
+  foreignKey: "userId",
+});
+Site.belongsTo(User, {
+  foreignKey: "userId",
+});
+
+User.hasMany(Category, {
+  foreignKey: "userId",
+});
+Category.belongsTo(User, {
+  foreignKey: "userId",
+});
 
 // 初始化样本数据
 const initSampleData = async () => {

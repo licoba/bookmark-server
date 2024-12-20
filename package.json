@@ -1,23 +1,29 @@
 {
   "name": "navigation-backend",
   "version": "1.0.0",
-  "description": "导航站后端项目",
+  "description": "导航站后端项目，包含完整的 API 文档和自动化测试",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "init-db": "node src/scripts/init-db.js"
+    "init-db": "node src/scripts/init-db.js",
+    "docs": "node scripts/export-docs.js",
+    "docs:watch": "nodemon --watch src -e js --exec npm run docs"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cheerio": "^1.0.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "express-fileupload": "^1.5.1",
     "helmet": "^4.6.0",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "mysql2": "^2.3.3",
-    "sequelize": "^6.37.5"
+    "sequelize": "^6.37.5",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.14"

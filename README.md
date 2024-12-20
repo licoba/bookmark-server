@@ -50,8 +50,34 @@ sql
 CREATE DATABASE navigation_site;
 ```
 
+## API 文档
+
+项目提供了两种方式查看 API 文档：
+
+1. 在线文档
+   - 启动服务器后访问：`http://localhost:3000/api-docs`
+   - 支持在线调试接口
+
+2. 导出文档
+   ```bash
+   # 生成文档
+   npm run docs
+
+   # 监听文件变化并自动更新文档
+   npm run docs:watch
+   ```
+
 ## 开发环境
 
-```
+```bash
+# 安装依赖
+npm install
+
+# 初始化数据库
+npm run init-db
+
+# 启动开发服务器
 npm run dev
 ```
+
+访问 http://localhost:3000/api-docs 查看 API 文档

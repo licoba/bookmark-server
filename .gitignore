@@ -1,3 +1,5 @@
 node_modules/
 .env
 .DS_Store
+# 文件上传临时目录
+/tmp

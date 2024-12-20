@@ -12,7 +12,7 @@ const sequelize = new Sequelize({
   logging: (msg) => console.log(`[SQL] ${msg}`),
   define: {
     timestamps: true,
-    underscored: true,
+    underscored: false,
   },
 });
 

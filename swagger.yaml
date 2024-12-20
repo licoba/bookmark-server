@@ -1,0 +1,177 @@
+openapi: 3.0.0
+info:
+  title: API 文档
+  description: API 接口文档说明
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000
+    description: 开发环境服务器
+
+paths:
+  /api/search:
+    get:
+      summary: 接口描述
+      parameters: []
+
+  /api/auth/login:
+    post:
+      summary: 用户登录
+      description: 用户登录接口
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - username
+                - password
+              properties:
+                username:
+                  type: string
+                  description: 用户名
+                  example: "admin"
+                password:
+                  type: string
+                  description: 密码
+                  example: "123456"
+      responses:
+        "200":
+          description: 登录成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                        description: JWT token
+                      userInfo:
+                        $ref: "#/components/schemas/User"
+                  message:
+                    type: string
+                    example: "登录成功"
+        "401":
+          description: 登录失败
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 401
+                  message:
+                    type: string
+                    example: "用户名或密码错误"
+
+  /api/categories:
+    get:
+      summary: 获取分类列表
+      description: 获取所有分类信息
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: pageSize
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: 成功返回
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Category"
+                  message:
+                    type: string
+                    example: "success"
+
+    post:
+      summary: 创建新分类
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 分类名称
+                parentId:
+                  type: integer
+                  description: 父分类ID
+      responses:
+        "201":
+          description: 创建成功
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 用户ID
+        username:
+          type: string
+          description: 用户名
+        email:
+          type: string
+          description: 邮箱
+        role:
+          type: string
+          description: 用户角色
+          enum: [admin, user]
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 分类ID
+        name:
+          type: string
+          description: 分类名称
+        parentId:
+          type: integer
+          description: 父分类ID
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []
