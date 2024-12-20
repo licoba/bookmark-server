@@ -407,3 +407,454 @@ function escapeHtml(unsafe) {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
 }
+
+/**
+ * @swagger
+ * tags:
+ *   - name: 书签迁移
+ *     description: Chrome书签导入导出功能
+ *
+ * /bookmarks:
+ *   get:
+ *     tags: [书签迁移]
+ *     summary: 获取所有书签
+ *     description: 获取用户的所有书签列表
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: 获取成功
+ *         content:
+ *           application/json:
+ *             example:
+ *               code: 0
+ *               message: "获取书签列表成功"
+ *               data: [
+ *                 {
+ *                   id: 1,
+ *                   title: "示例网站",
+ *                   url: "https://example.com",
+ *                   description: "这是一个示例网站",
+ *                   category: "常用工具",
+ *                   tags: ["工具", "示例"],
+ *                   icon: "https://example.com/favicon.ico",
+ *                   createdAt: "2024-03-20T12:00:00.000Z",
+ *                   updatedAt: "2024-03-20T12:00:00.000Z"
+ *                 }
+ *               ]
+ *
+ *   post:
+ *     tags: [书签迁移]
+ *     summary: 创建书签
+ *     description: 创建新的书签
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - url
+ *               - category
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 description: 书签标题
+ *               url:
+ *                 type: string
+ *                 description: 书签URL
+ *               description:
+ *                 type: string
+ *                 description: 书签描述
+ *               category:
+ *                 type: string
+ *                 description: 所属分类
+ *               tags:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: 标签列表
+ *               icon:
+ *                 type: string
+ *                 description: 图标URL
+ *     responses:
+ *       201:
+ *         description: 创建成功
+ *         content:
+ *           application/json:
+ *             example:
+ *               code: 0
+ *               message: "创建书���成功"
+ *               data: {
+ *                 id: 1,
+ *                 title: "新书签"
+ *               }
+ *
+ * /bookmarks/{id}:
+ *   put:
+ *     tags: [书签迁移]
+ *     summary: 更新书签
+ *     description: 更新指定ID的书签信息
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: 书签ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *               url:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               category:
+ *                 type: string
+ *               tags:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               icon:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: 更新成功
+ *         content:
+ *           application/json:
+ *             example:
+ *               code: 0
+ *               message: "更新书签成功"
+ *
+ *   delete:
+ *     tags: [书签迁移]
+ *     summary: 删���书签
+ *     description: 删除指定ID的书签
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: 书签ID
+ *     responses:
+ *       200:
+ *         description: 删除成功
+ *         content:
+ *           application/json:
+ *             example:
+ *               code: 0
+ *               message: "删除书签成功"
+ */
+
+// 获取所有书签
+exports.getAllBookmarks = async (req, res) => {
+  try {
+    const sites = await Site.findAll({
+      where: { userId: req.user.id },
+      order: [["createdAt", "DESC"]],
+    });
+    success(res, sites, "获取书签列表成功");
+  } catch (err) {
+    console.error("获取书签失败:", err);
+    error(res, 500, `获取书签失败: ${err.message}`);
+  }
+};
+
+// 创建书签
+exports.createBookmark = async (req, res) => {
+  try {
+    const { title, url, description, category, tags, icon } = req.body;
+
+    // 验证必填字段
+    if (!title || !url || !category) {
+      return error(res, 400, "标题、URL和分类为必填项");
+    }
+
+    // 验证URL格式
+    try {
+      new URL(url);
+    } catch (err) {
+      return error(res, 400, "无效的URL格式");
+    }
+
+    // 检查分类是否存��
+    const existingCategory = await Category.findOne({
+      where: {
+        name: category,
+        userId: req.user.id,
+      },
+    });
+
+    if (!existingCategory) {
+      return error(res, 400, "指定的分类不存在");
+    }
+
+    // 创建书签
+    const site = await Site.create({
+      userId: req.user.id,
+      title,
+      url,
+      description: description || "",
+      category,
+      tags: tags || [],
+      icon: icon || `${new URL(url).origin}/favicon.ico`,
+    });
+
+    created(res, site, "创建书签成功");
+  } catch (err) {
+    console.error("创建书签失败:", err);
+    error(res, 500, `创建书签失败: ${err.message}`);
+  }
+};
+
+// 更新书签
+exports.updateBookmark = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, url, description, category, tags, icon } = req.body;
+
+    // 查找书签
+    const site = await Site.findOne({
+      where: {
+        id,
+        userId: req.user.id,
+      },
+    });
+
+    if (!site) {
+      return error(res, 404, "书签不存在");
+    }
+
+    // 如果更新URL，验证格式
+    if (url) {
+      try {
+        new URL(url);
+      } catch (err) {
+        return error(res, 400, "无效的URL格式");
+      }
+    }
+
+    // 如果更新分类，检查分类是否存在
+    if (category) {
+      const existingCategory = await Category.findOne({
+        where: {
+          name: category,
+          userId: req.user.id,
+        },
+      });
+
+      if (!existingCategory) {
+        return error(res, 400, "指定的分类不存在");
+      }
+    }
+
+    // 更新书签
+    await site.update({
+      title: title || site.title,
+      url: url || site.url,
+      description: description !== undefined ? description : site.description,
+      category: category || site.category,
+      tags: tags || site.tags,
+      icon: icon || site.icon,
+    });
+
+    success(res, site, "更新书签成功");
+  } catch (err) {
+    console.error("更新书签失败:", err);
+    error(res, 500, `更新书签失败: ${err.message}`);
+  }
+};
+
+// 删除书签
+exports.deleteBookmark = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // 查找并删除书签
+    const deleted = await Site.destroy({
+      where: {
+        id,
+        userId: req.user.id,
+      },
+    });
+
+    if (!deleted) {
+      return error(res, 404, "书签不存在");
+    }
+
+    success(res, null, "删除书签成功");
+  } catch (err) {
+    console.error("删除书签失败:", err);
+    error(res, 500, `删除书签失败: ${err.message}`);
+  }
+};
+
+/**
+ * @swagger
+ * tags:
+ *   - name: 书签管理
+ *     description: 书签的增删改查接口
+ *
+ * /bookmarks:
+ *   get:
+ *     tags: [书签管理]
+ *     summary: 获取所有书签
+ *     description: 获取用户的所有书签列表
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: 获取成功
+ *         content:
+ *           application/json:
+ *             example:
+ *               code: 0
+ *               message: "获取书签列表成功"
+ *               data: [
+ *                 {
+ *                   id: 1,
+ *                   title: "示例网站",
+ *                   url: "https://example.com",
+ *                   description: "这是一个示例网站",
+ *                   category: "常用工具",
+ *                   tags: ["工具", "示例"],
+ *                   icon: "https://example.com/favicon.ico",
+ *                   createdAt: "2024-03-20T12:00:00.000Z",
+ *                   updatedAt: "2024-03-20T12:00:00.000Z"
+ *                 }
+ *               ]
+ *
+ *   post:
+ *     tags: [书签管理]
+ *     summary: 创建书签
+ *     description: 创建新的书签
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - url
+ *               - category
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 description: 书签标题
+ *               url:
+ *                 type: string
+ *                 description: 书签URL
+ *               description:
+ *                 type: string
+ *                 description: 书签描述
+ *               category:
+ *                 type: string
+ *                 description: 所属分类
+ *               tags:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: 标签列表
+ *               icon:
+ *                 type: string
+ *                 description: 图标URL
+ *
+ * /bookmarks/count:
+ *   get:
+ *     tags: [书签管理]
+ *     summary: 获取书签总数
+ *     description: 获取用户的书签总数
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: 获取成功
+ *         content:
+ *           application/json:
+ *             example:
+ *               code: 0
+ *               message: "获取书签总数成功"
+ *               data: {
+ *                 count: 42
+ *               }
+ *
+ * /bookmarks/{id}:
+ *   put:
+ *     tags: [书签管理]
+ *     summary: 更新书签
+ *     description: 更新指定ID的书签信息
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: 书签ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *               url:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               category:
+ *                 type: string
+ *               tags:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               icon:
+ *                 type: string
+ *
+ *   delete:
+ *     tags: [书签管理]
+ *     summary: 删除书签
+ *     description: 删除指定ID的书签
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: 书签ID
+ */
+
+// 获取书签总数
+exports.getBookmarksCount = async (req, res) => {
+  try {
+    const count = await Site.count({
+      where: { userId: req.user.id },
+    });
+    success(res, { count }, "获取书签总数成功");
+  } catch (err) {
+    console.error("获取书签总数失败:", err);
+    error(res, 500, `获取书签总数失败: ${err.message}`);
+  }
+};
